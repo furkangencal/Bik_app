@@ -22,9 +22,14 @@ namespace Bik_app.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .HasAlternateKey(c => c.Name)
-                .HasName("AK_Product_Name");
-     
+                .HasKey(p => p.ProductID);
+
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(p => p.ProductCategoryID);
+
+            modelBuilder.Entity<ProductSubcategory>()
+                .HasKey(p => p.ProductSubcategoryID);
+
             //modelBuilder.Entity<ProductCategory>()
             //    .Property(p => p.Mail)
             //    .IsRequired()

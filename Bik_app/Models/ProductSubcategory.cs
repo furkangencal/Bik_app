@@ -7,10 +7,10 @@ namespace Bik_app.Models
 {
     public class ProductSubcategory
     {
-        public int ProductSubcategoryID;
-        public int ProductCategoryID;
-        public string Name;
-        public Guid rowguid;
-        public DateTime ModifiedDate;
+        public int ProductSubcategoryID { get; set; }
+        public int ProductCategoryID{ get; set; }
+        public string Name{ get; set; }
+        public Guid rowguid{ get; set; }
+        public DateTime ModifiedDate{ get; set; }
     }
 }
