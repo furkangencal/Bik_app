@@ -13,13 +13,15 @@ namespace Bik_app.Migrations
                 {
                     ProductCategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     rowguid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductCategories", x => x.ProductCategoryID);
+                    table.UniqueConstraint("AK_ProductCategory_Name", x => x.Name);
+                    table.UniqueConstraint("AK_ProductCategory_rowguid", x => x.rowguid);
                 });
 
             migrationBuilder.CreateTable(
@@ -28,10 +30,10 @@ namespace Bik_app.Migrations
                 {
                     ProductID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MakeFlag = table.Column<bool>(type: "bit", nullable: false),
-                    FinishedGoodsFlag = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProductNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MakeFlag = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    FinishedGoodsFlag = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SafetyStockLevel = table.Column<short>(type: "smallint", nullable: false),
                     ReorderPoint = table.Column<short>(type: "smallint", nullable: false),
@@ -56,6 +58,9 @@ namespace Bik_app.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductID);
+                    table.UniqueConstraint("AK_Product_Name", x => x.Name);
+                    table.UniqueConstraint("AK_Product_ProductNumber", x => x.ProductNumber);
+                    table.UniqueConstraint("AK_Product_rowguid", x => x.rowguid);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,13 +70,15 @@ namespace Bik_app.Migrations
                     ProductSubcategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductCategoryID = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     rowguid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductSubcategories", x => x.ProductSubcategoryID);
+                    table.UniqueConstraint("AK_ProductSubcategory_Name", x => x.Name);
+                    table.UniqueConstraint("AK_ProductSubcategory_rowguid", x => x.rowguid);
                 });
         }
 

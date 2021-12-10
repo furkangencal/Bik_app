@@ -39,19 +39,24 @@ namespace Bik_app.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("FinishedGoodsFlag")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<decimal>("ListPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("MakeFlag")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductLine")
                         .HasColumnType("nvarchar(max)");
@@ -60,7 +65,8 @@ namespace Bik_app.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ProductSubcategoryID")
                         .HasColumnType("int");
@@ -100,6 +106,15 @@ namespace Bik_app.Migrations
 
                     b.HasKey("ProductID");
 
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_Product_Name");
+
+                    b.HasAlternateKey("ProductNumber")
+                        .HasName("AK_Product_ProductNumber");
+
+                    b.HasAlternateKey("rowguid")
+                        .HasName("AK_Product_rowguid");
+
                     b.ToTable("Products");
                 });
 
@@ -114,12 +129,19 @@ namespace Bik_app.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("rowguid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ProductCategoryID");
+
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_ProductCategory_Name");
+
+                    b.HasAlternateKey("rowguid")
+                        .HasName("AK_ProductCategory_rowguid");
 
                     b.ToTable("ProductCategories");
                 });
@@ -135,7 +157,8 @@ namespace Bik_app.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ProductCategoryID")
                         .HasColumnType("int");
@@ -144,6 +167,12 @@ namespace Bik_app.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ProductSubcategoryID");
+
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_ProductSubcategory_Name");
+
+                    b.HasAlternateKey("rowguid")
+                        .HasName("AK_ProductSubcategory_rowguid");
 
                     b.ToTable("ProductSubcategories");
                 });
