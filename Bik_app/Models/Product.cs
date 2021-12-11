@@ -11,5 +11,6 @@ namespace Bik_app.Models
         public string Name { get; set; }
 
         public int ProductSubcategoryID { get; set; }
+        public ProductSubcategory ProductSubcategory { get; set; }
     }
 }

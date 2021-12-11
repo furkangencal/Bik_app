@@ -9,8 +9,8 @@ namespace Bik_app.Models
     {
         public int ProductSubcategoryID { get; set; }
         public string Name { get; set; }
-        public int ProductCategoryID{ get; set; }
 
+        public int ProductCategoryID{ get; set; }
         public ProductCategory ProductCategory { get; set; }
     }
 }
