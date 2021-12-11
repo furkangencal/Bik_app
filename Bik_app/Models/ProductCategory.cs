@@ -8,9 +8,7 @@ namespace Bik_app.Models
     public class ProductCategory
     {
         public int ProductCategoryID { get; set; }
-        public string Name{ get; set; }
-        public Guid rowguid{ get; set; }
-        public DateTime ModifiedDate{ get; set; }
+        public string Name { get; set; }
 
         public List<ProductSubcategory> ProductSubcategories { get; set; }
     }
