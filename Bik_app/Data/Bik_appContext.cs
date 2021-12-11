@@ -24,47 +24,11 @@ namespace Bik_app.Data
             modelBuilder.Entity<Product>()
                 .HasKey(p => p.ProductID);
 
-            modelBuilder.Entity<Product>()
-            .Property(b => b.MakeFlag)
-            .HasDefaultValue(1);
-
-            modelBuilder.Entity<Product>()
-            .Property(b => b.FinishedGoodsFlag)
-            .HasDefaultValue(1);
-
-            modelBuilder.Entity<Product>()
-                .HasAlternateKey(c => c.Name)
-                .HasName("AK_Product_Name");
-
-            modelBuilder.Entity<Product>()
-                .HasAlternateKey(c => c.ProductNumber)
-                .HasName("AK_Product_ProductNumber");
-
-            modelBuilder.Entity<Product>()
-                .HasAlternateKey(c => c.rowguid)
-                .HasName("AK_Product_rowguid");
-
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(p => p.ProductCategoryID);
 
-            modelBuilder.Entity<ProductCategory>()
-                .HasAlternateKey(c => c.Name)
-                .HasName("AK_ProductCategory_Name");
-
-            modelBuilder.Entity<ProductCategory>()
-                .HasAlternateKey(c => c.rowguid)
-                .HasName("AK_ProductCategory_rowguid");
-
             modelBuilder.Entity<ProductSubcategory>()
                 .HasKey(p => p.ProductSubcategoryID);
-
-            modelBuilder.Entity<ProductSubcategory>()
-                .HasAlternateKey(c => c.Name)
-                .HasName("AK_ProductSubcategory_Name");
-
-            modelBuilder.Entity<ProductSubcategory>()
-                .HasAlternateKey(c => c.rowguid)
-                .HasName("AK_ProductSubcategory_rowguid");
 
         }
 
