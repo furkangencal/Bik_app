@@ -1,4 +1,5 @@
-﻿using Bik_app.Models;
+﻿using Bik_app.Data;
+using Bik_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,9 +19,27 @@ namespace Bik_app.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var productCategory = new ProductCategory()
+            {
+                Name = "Elektronik"
+            };
+
+            var productSubcategory = new ProductSubcategory()
+            {
+                Name = "Telefon",
+                ProductCategory = productCategory
+            };
+
+            using (var bik_AppContext = new Bik_appContext())
+            {
+                bik_AppContext.Add(productSubcategory);
+                await bik_AppContext.SaveChangesAsync();
+
+                return View();
+            }
+            
         }
 
         public IActionResult Privacy()

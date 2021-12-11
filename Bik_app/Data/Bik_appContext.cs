@@ -18,7 +18,6 @@ namespace Bik_app.Data
         : base(options)
         { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
@@ -32,5 +31,6 @@ namespace Bik_app.Data
 
         }
 
+        
     }
 }
