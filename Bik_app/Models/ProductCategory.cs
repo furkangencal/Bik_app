@@ -10,6 +10,6 @@ namespace Bik_app.Models
         public int ProductCategoryID { get; set; }
         public string Name { get; set; }
 
-        public List<ProductSubcategory> ProductSubcategories { get; set; }
+        public ICollection<ProductSubcategory> ProductSubcategories { get; set; }
     }
 }
