@@ -1,5 +1,6 @@
 ﻿using Bik_app.Data;
 using Bik_app.Models;
+using Bik_app.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,34 +14,39 @@ namespace Bik_app.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        // private readonly Bik_appContext _dbContext;
+        private readonly IRepository _repository;
+        //Dependency injection
+        public HomeController(ILogger<HomeController> logger, /*Bik_appContext context,*/ IRepository repository)
         {
             _logger = logger;
+            //_dbContext = context;
+            _repository = repository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var productCategory = new ProductCategory()
-            {
-                Name = "Elektronik"
-            };
+            //var productCategory = new ProductCategory()
+            //{
+            //    Name = "Elektronik 3"
+            //};
 
-            var productSubcategory = new ProductSubcategory()
-            {
-                Name = "Telefon",
-                ProductCategory = productCategory
-            };
+            //var productSubcategory = new ProductSubcategory()
+            //{
+            //    Name = "Telefon 3",
+            //    ProductCategory = productCategory
+            //};
 
-            using (var bik_AppContext = new Bik_appContext())
-            {
-                bik_AppContext.Add(productSubcategory);
-                await bik_AppContext.SaveChangesAsync();
 
-                return View();
-            }
-            
+            //int result = _repository.AddSubCategory(productSubcategory);
+
+            var urunler = await _repository.GetProduct();
+
+
+            return View(urunler);
         }
+
+
 
         public IActionResult Privacy()
         {

@@ -1,4 +1,5 @@
 using Bik_app.Data;
+using Bik_app.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,8 @@ namespace Bik_app
             services.AddDbContext<Bik_appContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Conn"));
             });
+
+            services.AddTransient<IRepository, Repository.Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
