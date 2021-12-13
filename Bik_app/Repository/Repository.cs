@@ -1,5 +1,4 @@
-﻿using Bik_app.Data;
-using Bik_app.Models;
+﻿using Bik_app.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,8 @@ namespace Bik_app.Repository
 
     public class Repository : IRepository
     {
-        private readonly Bik_appContext db;
-        public Repository(Bik_appContext context)
+        private readonly AdventureWorks2017Context db;
+        public Repository(AdventureWorks2017Context context)
         {
             db = context;
         }
@@ -35,6 +34,6 @@ namespace Bik_app.Repository
             return products;
         }
 
-       
+
     }
 }
