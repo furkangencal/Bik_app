@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Bik_app.Models
 {
-    public class ProductCategory
+    public partial class ProductCategory
     {
-        public int ProductCategoryID { get; set; }
-        public string Name { get; set; }
+        public ProductCategory()
+        {
+            ProductSubcategories = new HashSet<ProductSubcategory>();
+        }
 
-        public List<ProductSubcategory> ProductSubcategories { get; set; }
+        public int ProductCategoryId { get; set; }
+        public string Name { get; set; }
+        public Guid Rowguid { get; set; }
+        public DateTime ModifiedDate { get; set; }
+
+        public virtual ICollection<ProductSubcategory> ProductSubcategories { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Bik_app.Models;
+using Bik_app.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,19 @@ namespace Bik_app.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRepository _repository;
+        //Dependency injection
+        public HomeController(ILogger<HomeController> logger,IRepository repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var urunler = await _repository.GetProduct();
+
+            return View(urunler);
         }
 
         public IActionResult Privacy()
