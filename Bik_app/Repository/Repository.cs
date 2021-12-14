@@ -1,4 +1,5 @@
 ﻿using Bik_app.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,10 @@ namespace Bik_app.Repository
 
             return products;
         }
-
-
+        
+        private IActionResult RedirectToPageResult(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

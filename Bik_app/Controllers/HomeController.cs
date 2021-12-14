@@ -12,13 +12,15 @@ namespace Bik_app.Controllers
 {
     public class HomeController : Controller
     {
+        private AdventureWorks2017Context Context { get; }
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository _repository;
         //Dependency injection
-        public HomeController(ILogger<HomeController> logger,IRepository repository)
+        public HomeController(ILogger<HomeController> logger,IRepository repository, AdventureWorks2017Context _adventureWorks2017Context)
         {
             _logger = logger;
             _repository = repository;
+            this.Context = _adventureWorks2017Context;
         }
 
         public async Task<IActionResult> Index()
@@ -26,6 +28,30 @@ namespace Bik_app.Controllers
             var urunler = await _repository.GetProduct();
 
             return View(urunler);
+        }
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(Product product)
+        {
+            this.Context.Add(product);
+            this.Context.SaveChanges();
+            return View(product);
+        }
+
+        public IActionResult EditProduct()
+        {
+            return View();
+        }
+
+
+
+        public IActionResult ProductDelete()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
