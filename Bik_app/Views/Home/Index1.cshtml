@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Bik_app.Models.Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class="container">
+    <br />
+    <div style="width:90%; margin:0 auto;">
+        <table id="customerDatatable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>SubCategory</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>İşlemler</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductSubcategoryId
+                        </td>
+                        <td>
+                            @item.ProductId
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            <a class="btn btn-primary text-white" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                            <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+$(document).ready(function () {
+    $('#customerDatatable').dataTable({
+
+            });
+        });</script>
+    <script src="~/lib/datatables/js/jquery.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+}

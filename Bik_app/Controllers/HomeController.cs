@@ -28,6 +28,16 @@ namespace Bik_app.Controllers
             return View(urunler);
         }
 
+        public IActionResult ProductEdit()
+        {
+            return View();
+        }
+
+        public IActionResult ProductDelete()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
