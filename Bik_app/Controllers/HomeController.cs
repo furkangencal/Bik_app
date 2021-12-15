@@ -42,9 +42,17 @@ namespace Bik_app.Controllers
             return View(product);
         }
 
-        public IActionResult EditProduct()
+        public IActionResult EditProduct(int id)
         {
-            return View();
+            return View(Context.Products.Where(p => p.ProductId == id).FirstOrDefault());
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(Product product)
+        {
+            Context.Products.Update(product);
+            Context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 
