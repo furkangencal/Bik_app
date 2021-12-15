@@ -62,16 +62,17 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary text-white" asp-controller="Home" asp-action="EditProduct" asp-route-id="@item.ProductId">Ürün Güncelleme</a>
-                                                <button type="button" asp-route-id="@item.Name" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                                                <input type="button" value="Sil" class="btn btn-danger" onclick="deleteConfirm('@item.ProductId')" />
+                                                @*<button type="button" onclick="deleteConfirm(@item.ProductId)" class="btn btn-default">
                                                     Sil
-                                                </button>
+                                                </button>*@
 
                                                 @*<form asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:contents;">
 
-                                <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
+                                                        <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
 
 
-                            </form>*@
+                                                    </form>*@
                                             </td>
                                         </tr>
                                     }
@@ -89,19 +90,17 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title"> Ürünü silmek istediğinize emin misiniz?</h4>
+                                            <h4 class="modal-title"><strong id="deletedValueName"></strong> ürününü silmek istediğinize emin misiniz?</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                                            <button type="button" class="btn btn-danger">Ürünü Sil</button>
+                                            <button type="button" class="btn btn-danger" onclick="deleteProduct()">Ürünü Sil</button>
                                         </div>
                                     </div>
-                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -120,8 +119,6 @@
 <!-- /.content-wrapper -->
 
 
-
-
 @section Scripts
 {
     <!-- Page specific script -->
@@ -137,6 +134,30 @@
                 "buttons": ["excel", "pdf"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
+    </script>
+    <script>
+        //this is only display bootstrap modal pop up dialog
+        var deleteConfirm = function (val) {
+            $('#deletedValueName').text(val);
+            $('#modal-default').modal('show');
+
+            //call this function after click on confirm delete button
+            var deleteProduct = function () {
+                $('#divLoading').show();
+                var id = $('#id').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Home", "DeleteProduct")',
+                    data: { id: id },
+                    success: function (result) {
+                        $("#modal-default").modal('hide');
+                    },
+                    error: function () {
+                        $("#modal-default").modal('hide');
+                    }
+                });
+            }
+        }
     </script>
     <script>
         $(document).ready(function () {
