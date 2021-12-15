@@ -42,18 +42,41 @@ namespace Bik_app.Controllers
             return View(product);
         }
 
-        public IActionResult EditProduct()
+        public IActionResult EditProduct(int id)
         {
-            return View();
+            return View(Context.Products.Where(p => p.ProductId == id).FirstOrDefault());
         }
 
-
-
-        public IActionResult ProductDelete()
+        [HttpPost]
+        public IActionResult EditProduct(Product product)
         {
-            return View();
+            Context.Products.Update(product);
+            Context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
+        //[HttpPost]
+        //public IActionResult DeleteProduct(int id)
+        //{
+        //    var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
+        //    Context.Products.Remove(product);
+        //    Context.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        public JsonResult DeleteProduct(int id)
+        {
+
+            //using (var context = new EmployeeDetailsEntities())
+            //{
+            //    var empDetail = context.EmpDetails.Where(a => a.Id == Id).FirstOrDefault();
+            //    empDetail.IsDeleted = true;
+            //    context.SaveChanges();
+            //}
+            //return Json(new { status = "Success" });
+            return Json(id);
+
+        }
         public IActionResult Privacy()
         {
             return View();

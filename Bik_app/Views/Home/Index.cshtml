@@ -11,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>DataTables</h1>
+                    <h1>Ürün Tablosu</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">DataTables</li>
+                        <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                        <li class="breadcrumb-item active">Ürün Tablosu</li>
                     </ol>
                 </div>
             </div>
@@ -30,9 +30,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">DataTable with default features</h3>
+
                             <div style="float:right;">
-                                <a class="btn btn-success text-white" asp-controller="Home" asp-action="AddProduct">Add</a>
+                                <a class="btn btn-success text-white" asp-controller="Home" asp-action="AddProduct">Ürün Ekleme</a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -40,45 +40,72 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>SubCategory ID</th>
-                                        <th>Product Number</th>
-                                        <th>Product Name</th>
-                                        <th>Operations</th>
+                                        <th>Alt Kategori ID</th>
+                                        <th>Ürün Numarası</th>
+                                        <th>Ürün Adı</th>
+                                        <th>İşlemler</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @item.ProductSubcategoryId
-                                        </td>
-                                        <td>
-                                            @item.ProductNumber
-                                        </td>
-                                        <td>
-                                            @item.Name
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary text-white" asp-controller="Home" asp-action="EditProduct" asp-route-id="@item.ProductId">Edit</a>
-                                            <a class="btn btn-danger text-white" asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId">Delete</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @item.ProductSubcategoryId
+                                            </td>
+                                            <td>
+                                                @item.ProductNumber
+                                            </td>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary text-white" asp-controller="Home" asp-action="EditProduct" asp-route-id="@item.ProductId">Ürün Güncelleme</a>
+                                                <input type="button" value="Sil" class="btn btn-danger" onclick="deleteConfirm('@item.ProductId')" />
+                                                @*<button type="button" onclick="deleteConfirm(@item.ProductId)" class="btn btn-default">
+                                                    Sil
+                                                </button>*@
+
+                                                @*<form asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:contents;">
+
+                                                        <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
+
+
+                                                    </form>*@
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>SubCategory ID</th>
-                                        <th>Product Number</th>
-                                        <th>Product Name</th>
-                                        <th>Operations</th>
+                                        <th>Alt Kategori ID</th>
+                                        <th>Ürün Numarası</th>
+                                        <th>Ürün Adı</th>
+                                        <th>İşlemler</th>
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div class="modal fade" id="modal-default">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"><strong id="deletedValueName"></strong> ürününü silmek istediğinize emin misiniz?</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                                            <button type="button" class="btn btn-danger" onclick="deleteProduct()">Ürünü Sil</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
+
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
@@ -90,8 +117,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-
 
 
 @section Scripts
@@ -109,6 +134,30 @@
                 "buttons": ["excel", "pdf"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
+    </script>
+    <script>
+        //this is only display bootstrap modal pop up dialog
+        var deleteConfirm = function (val) {
+            $('#deletedValueName').text(val);
+            $('#modal-default').modal('show');
+
+            //call this function after click on confirm delete button
+            var deleteProduct = function () {
+                $('#divLoading').show();
+                var id = $('#id').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Home", "DeleteProduct")',
+                    data: { id: id },
+                    success: function (result) {
+                        $("#modal-default").modal('hide');
+                    },
+                    error: function () {
+                        $("#modal-default").modal('hide');
+                    }
+                });
+            }
+        }
     </script>
     <script>
         $(document).ready(function () {
