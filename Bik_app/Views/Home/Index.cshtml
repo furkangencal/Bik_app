@@ -62,7 +62,12 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-primary text-white" asp-controller="Home" asp-action="EditProduct" asp-route-id="@item.ProductId">Ürün Güncelleme</a>
-                                            <a class="btn btn-danger text-white" asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId">Ürün Silme</a>
+                                            <form asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:contents;">
+                                                
+                                                <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>    
+                                                
+                                                
+                                            </form>
                                         </td>
                                     </tr>
                                     }

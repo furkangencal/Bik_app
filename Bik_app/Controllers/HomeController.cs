@@ -55,11 +55,13 @@ namespace Bik_app.Controllers
             return RedirectToAction("Index");
         }
 
-
-
-        public IActionResult ProductDelete()
+        [HttpPost]
+        public IActionResult DeleteProduct(int id)
         {
-            return View();
+            var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
+            Context.Products.Remove(product);
+            Context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
