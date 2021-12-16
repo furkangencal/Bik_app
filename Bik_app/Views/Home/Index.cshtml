@@ -62,17 +62,18 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary text-white" asp-controller="Home" asp-action="EditProduct" asp-route-id="@item.ProductId">Ürün Güncelleme</a>
-                                                <input type="button" value="Sil" class="btn btn-danger" onclick="deleteConfirm('@item.ProductId')" />
+                                                @*<input type="button" value="Sil" class="btn btn-danger" onclick="deleteProduct('@item.ProductId')" />*@
+                                                <a class="btn btn-danger deleteProduct" title="Sil" href="#" data-id="@item.ProductId" role="button"><i class="fa fa-trash"></i></a>
                                                 @*<button type="button" onclick="deleteConfirm(@item.ProductId)" class="btn btn-default">
-                                                    Sil
-                                                </button>*@
+            Sil
+        </button>*@
 
                                                 @*<form asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:contents;">
 
-                                                        <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
+            <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
 
 
-                                                    </form>*@
+        </form>*@
                                             </td>
                                         </tr>
                                     }
@@ -86,7 +87,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            <div class="modal fade" id="modal-default">
+                            @*<div class="modal fade" id="modal-default">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -101,7 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -136,13 +137,51 @@
         });
     </script>
     <script>
+        $('.deleteProduct').on('click', function () {
+				var that = $(this);
+                bootbox.confirm({
+                    message: "Ürünü silmek istediğinize emin misiniz?",
+                    buttons: {
+                        confirm: {
+                            label: 'Sil',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'Vazgeç',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/Home/DeleteProduct/" + that.data('id'),
+                                type: "POST",
+                                contentType: "application/json;charset=UTF-8",
+                                dataType: "json",
+                                success: function (result) {
+                                    loadData();
+                                },
+                                error: function (errormessage) {
+                                    alert(errormessage.responseText);
+                                }
+                            });
+                            console.log('This was logged in the callback: ' + result);
+                        }
+                         else {
+                            bootbox.alert("Cancelled");
+                        }
+                    }
+                });
+			});
+    </script>
+    <script>
         //this is only display bootstrap modal pop up dialog
-        var deleteConfirm = function (val) {
-            $('#deletedValueName').text(val);
-            $('#modal-default').modal('show');
+        //var deleteConfirm = function (val) {
+        //    $('#deletedValueName').text(val);
+        //    $('#modal-default').modal('show');
 
             //call this function after click on confirm delete button
-            var deleteProduct = function () {
+            @*var deleteProduct = function () {
                 $('#divLoading').show();
                 var id = $('#id').val();
                 $.ajax({
@@ -157,8 +196,9 @@
                     }
                 });
             }
-        }
+        }*@
     </script>
+
     <script>
         $(document).ready(function () {
             $('#customerDatatable').dataTable({

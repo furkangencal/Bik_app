@@ -64,17 +64,16 @@ namespace Bik_app.Controllers
         //    return RedirectToAction("Index");
         //}
 
+
         public JsonResult DeleteProduct(int id)
         {
 
-            //using (var context = new EmployeeDetailsEntities())
-            //{
-            //    var empDetail = context.EmpDetails.Where(a => a.Id == Id).FirstOrDefault();
-            //    empDetail.IsDeleted = true;
-            //    context.SaveChanges();
-            //}
-            //return Json(new { status = "Success" });
-            return Json(id);
+
+            var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
+            Context.Products.Remove(product);
+            Context.SaveChanges();
+
+            return Json(new { status = "Success" });
 
         }
         public IActionResult Privacy()
