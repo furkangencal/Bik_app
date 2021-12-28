@@ -67,14 +67,11 @@ namespace Bik_app.Controllers
 
         public JsonResult DeleteProduct(int id)
         {
-
-
             var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
             Context.Products.Remove(product);
             Context.SaveChanges();
 
-            return Json(new { status = "Success" });
-
+            return Json(new { status = "success" });
         }
         public IActionResult Privacy()
         {
