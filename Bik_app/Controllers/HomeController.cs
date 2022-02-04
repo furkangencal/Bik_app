@@ -16,7 +16,7 @@ namespace Bik_app.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository _repository;
         //Dependency injection
-        public HomeController(ILogger<HomeController> logger,IRepository repository, AdventureWorks2017Context _adventureWorks2017Context)
+        public HomeController(ILogger<HomeController> logger, IRepository repository, AdventureWorks2017Context _adventureWorks2017Context)
         {
             _logger = logger;
             _repository = repository;
@@ -29,18 +29,21 @@ namespace Bik_app.Controllers
 
             return View(urunler);
         }
+
+
         public IActionResult AddProduct()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public JsonResult AddProductForm(Product product)
         {
             this.Context.Add(product);
             this.Context.SaveChanges();
-            return View(product);
+            return Json(product);
         }
+
+
 
         public IActionResult EditProduct(int id)
         {
@@ -48,33 +51,19 @@ namespace Bik_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProduct(Product product)
+        public IActionResult EditTheProduct(Product product)
         {
             Context.Products.Update(product);
             Context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //[HttpPost]
-        //public IActionResult DeleteProduct(int id)
-        //{
-        //    var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
-        //    Context.Products.Remove(product);
-        //    Context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-
         public JsonResult DeleteProduct(int id)
         {
-
-
             var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
             Context.Products.Remove(product);
             Context.SaveChanges();
 
-            return Json(new { status = "Success" });
-
+            return Json(new { status = "success" });
         }
         public IActionResult Privacy()
         {
@@ -88,3 +77,19 @@ namespace Bik_app.Controllers
         }
     }
 }
+//[HttpPost]
+//public IActionResult AddProduct(Product product)
+//{
+//this.Context.Add(product);
+//this.Context.SaveChanges();
+//return View(product);
+//}
+
+//[HttpPost]
+//public IActionResult DeleteProduct(int id)
+//{
+//    var product = Context.Products.Where(a => a.ProductId == id).FirstOrDefault();
+//    Context.Products.Remove(product);
+//    Context.SaveChanges();
+//    return RedirectToAction("Index");
+//}

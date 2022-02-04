@@ -37,7 +37,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="productTable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Alt Kategori ID</th>
@@ -65,15 +65,15 @@
                                                 @*<input type="button" value="Sil" class="btn btn-danger" onclick="deleteProduct('@item.ProductId')" />*@
                                                 <a class="btn btn-danger deleteProduct" title="Sil" href="#" data-id="@item.ProductId" role="button"><i class="fa fa-trash"></i></a>
                                                 @*<button type="button" onclick="deleteConfirm(@item.ProductId)" class="btn btn-default">
-            Sil
-        </button>*@
+                                                    Sil
+                                                    </button>*@
 
                                                 @*<form asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:contents;">
 
-            <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
+                                                    <button type="submit" class="btn btn-danger btn-primary">Ürün Silme</button>
 
 
-        </form>*@
+                                                    </form>*@
                                             </td>
                                         </tr>
                                     }
@@ -89,20 +89,20 @@
                             </table>
                             @*<div class="modal fade" id="modal-default">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><strong id="deletedValueName"></strong> ürününü silmek istediğinize emin misiniz?</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                                            <button type="button" class="btn btn-danger" onclick="deleteProduct()">Ürünü Sil</button>
-                                        </div>
-                                    </div>
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title"><strong id="deletedValueName"></strong> ürününü silmek istediğinize emin misiniz?</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
                                 </div>
-                            </div>*@
+                                <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteProduct()">Ürünü Sil</button>
+                                </div>
+                                </div>
+                                </div>
+                                </div>*@
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -118,95 +118,78 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-
 @section Scripts
 {
-    <!-- Page specific script -->
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "paging": true,
-                "responsive": true,
-                "lengthChange": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "buttons": ["excel", "pdf"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script>
-    <script>
-        $('.deleteProduct').on('click', function () {
-				var that = $(this);
-                bootbox.confirm({
-                    message: "Ürünü silmek istediğinize emin misiniz?",
-                    buttons: {
-                        confirm: {
-                            label: 'Sil',
-                            className: 'btn-danger'
-                        },
-                        cancel: {
-                            label: 'Vazgeç',
-                            className: 'btn-primary'
-                        }
+<!-- Page specific script -->
+<script>
+    $(function () {
+        $("#productTable").DataTable({
+            "paging": true,
+            "responsive": true,
+            "lengthChange": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "buttons": ["excel", "pdf"]
+        }).buttons().container().appendTo('#productTable_wrapper .col-md-6:eq(0)');
+    });
+</script>
+<script>
+    $('.deleteProduct').on('click', function () {
+            var that = $(this);
+            bootbox.confirm({
+                message: "Ürünü silmek istediğinize emin misiniz?",
+                buttons: {
+                    confirm: {
+                        label: 'Sil',
+                        className: 'btn-danger'
                     },
-                    callback: function (result) {
-                        if (result) {
-                            $.ajax({
-                                url: "/Home/DeleteProduct/" + that.data('id'),
-                                type: "POST",
-                                contentType: "application/json;charset=UTF-8",
-                                dataType: "json",
-                                success: function (result) {
-                                    loadData();
-                                },
-                                error: function (errormessage) {
-                                    alert(errormessage.responseText);
-                                }
-                            });
-                            console.log('This was logged in the callback: ' + result);
-                        }
-                         else {
-                            bootbox.alert("Cancelled");
-                        }
+                    cancel: {
+                        label: 'Vazgeç',
+                        className: 'btn-primary'
                     }
-                });
-			});
-    </script>
-    <script>
-        //this is only display bootstrap modal pop up dialog
-        //var deleteConfirm = function (val) {
-        //    $('#deletedValueName').text(val);
-        //    $('#modal-default').modal('show');
-
-            //call this function after click on confirm delete button
-            @*var deleteProduct = function () {
-                $('#divLoading').show();
-                var id = $('#id').val();
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Home", "DeleteProduct")',
-                    data: { id: id },
-                    success: function (result) {
-                        $("#modal-default").modal('hide');
-                    },
-                    error: function () {
-                        $("#modal-default").modal('hide');
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Home/DeleteProduct/" + that.data('id'),
+                            type: "POST",
+                            contentType: "application/json;charset=UTF-8",
+                            dataType: "json",
+                            success: function (result) {
+                                toastr.success(
+                                  'Ürün Başarıyla Silindi!',
+                                  'Sayfa yenileniyor.',
+                                  {
+                                    timeOut: 3000,
+                                    fadeOut: 3000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                      }
+                                  }
+                                );
+                            },
+                            error: function (errormessage) {
+                                    $('.toastrDefaultError').click(function() {
+                                      toastr.error('Ürün Eklenemedi.!')
+                                    });
+                            }
+                        });
                     }
-                });
-            }
-        }*@
-    </script>
+                     else {
 
-    <script>
-        $(document).ready(function () {
-            $('#customerDatatable').dataTable({
-
+                    }
+                }
             });
         });
-    </script>
-    @*<script src="~/lib/datatables/js/jquery.js"></script>
-        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>*@
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#customerDatatable').dataTable({
+
+        });
+    });
+</script>
 }
 
