@@ -30,7 +30,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <form method="post" asp-controller="Home" asp-action="AddProduct">
+                        <form id="AddProductForm">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="ProductSubcategoryId" class="control-label">Alt Kategori Id</label>
@@ -68,7 +68,8 @@
                                 <span asp-validation-for="ReorderPoint" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Ürün Ekle" class="btn btn-primary" />
+                                @*<input type="submit" onclick="AddProductForm" value="Ürün Ekle" class="btn btn-primary" />*@
+                                <button type="button" class="btn btn-primary" onclick="AddProductForm()">Ürün Ekle </button>
                             </div>
                         </form>
                     </div>
@@ -85,3 +86,28 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+
+<script>
+        function AddProductForm(){
+        var data = $("#AddProductForm").serialize();
+        console.log(data);
+        alert(data);
+        $.ajax({
+            type: 'POST',
+            url: '/Home/AddProductForm',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+            data: data,
+            success: function (result) {
+                alert('Successfully received Data ');
+                console.log(result);
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
+        }
+
+</script>
+

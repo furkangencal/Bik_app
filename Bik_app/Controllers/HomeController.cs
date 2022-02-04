@@ -29,17 +29,26 @@ namespace Bik_app.Controllers
 
             return View(urunler);
         }
+
+
         public IActionResult AddProduct()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddProduct(Product product)
+        //[HttpPost]
+        //public IActionResult AddProduct(Product product)
+        //{
+            //this.Context.Add(product);
+            //this.Context.SaveChanges();
+            //return View(product);
+        //}
+
+        public JsonResult AddProductForm(Product product)
         {
             this.Context.Add(product);
             this.Context.SaveChanges();
-            return View(product);
+            return Json(product);
         }
 
         public IActionResult EditProduct(int id)
